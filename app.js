@@ -7,6 +7,7 @@ const expressValidator = require('express-validator');
 require('dotenv').config();
 
 //import routes
+const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 // app
 const app = express();
@@ -17,7 +18,7 @@ mongoose
     useNewUrlParser: true,
     useCreateIndex: true
 })
-.then(() => console.log('DB Connected'));
+    .then(() => console.log('DB Connected'));
 
 //middlewares
 app.use(morgan('dev'));
@@ -27,11 +28,12 @@ app.use(expressValidator());
 
 
 // routes middleware
+app.use('/api', authRoutes);
 app.use('/api', userRoutes);
 
-const port = process.env.PORT || 8000
+const port = process.env.PORT || 8000;
 
 app.listen(port, () => {
-    console.log(`Sever is running on port ${port}`)
+    console.log(`Server is running on port ${port}`);
 });
 
