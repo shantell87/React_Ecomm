@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { Redirect } from "react-router-dom";
 import Layout from "../core/Layout";
-import { signin, authenticate } from '../auth/index';
+import { signin, authenticate, isAuthenticated } from '../auth/index';
 
 const Signin = () => {
     const [values, setValues] = useState({
-        email: "",
-        password: "",
+        email: "ryan@gmail.com",
+        password: "rrrrrr9",
         error: "",
         loading: false,
         redirectToReferrer: false
-    })
+    });
 
     const { email, password, loading, error, redirectToReferrer } = values;
+    const { user } = isAuthenticated();
 
     const handleChange = name => event => {
         setValues({ ...values, error: false, [name]: event.target.value });
@@ -37,7 +38,6 @@ const Signin = () => {
 
     const signUpForm = () => (
         <form>
-
             <div className="form-group">
                 <label className="text-muted">Email</label>
                 <input
@@ -72,19 +72,25 @@ const Signin = () => {
         </div>
     );
 
-    const showLoading = () => 
+    const showLoading = () =>
         loading && (
             <div className="alert alert-info">
                 <h2>Loading...</h2>
             </div>
-    );
+        );
 
     const redirectUser = () => {
         if (redirectToReferrer) {
+            if (user && user.role === 1) {
+                return <Redirect to="/admin/dashboard" />;
+            } else {
+                return <Redirect to="/user/dashboard" />;
+            }
+        }
+        if (isAuthenticated()) {
             return <Redirect to="/" />;
         }
     };
-
 
     return (
         <Layout
@@ -99,4 +105,5 @@ const Signin = () => {
         </Layout>
     );
 };
+
 export default Signin;
