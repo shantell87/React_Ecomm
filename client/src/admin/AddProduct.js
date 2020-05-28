@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { createProduct } from "./apiAdmin";
 
 const AddProduct = () => {
-    const { user, token } = isAuthenticated();
     const [values, setValues] = useState({
         name: "",
         description: "",
@@ -22,6 +21,7 @@ const AddProduct = () => {
         formData: ""
     });
 
+    const { user, token } = isAuthenticated();
     const {
         name,
         description,
@@ -49,7 +49,25 @@ const AddProduct = () => {
     };
 
     const clickSubmit = event => {
-        //
+        event.preventDefault();
+        setValues({ ...values, error: "", loading: true });
+
+        createProduct(user._id, token, formData).then(data => {
+            if (data.error) {
+                setValues({ ...values, error: data.error });
+            } else {
+                setValues({
+                    ...values,
+                    name: "",
+                    description: "",
+                    photo: "",
+                    price: "",
+                    quantity: "",
+                    loading: false,
+                    createdProduct: data.name
+                });
+            }
+        });
     };
 
     const newPostForm = () => (
@@ -102,6 +120,7 @@ const AddProduct = () => {
                     className="form-control"
                 >
                     <option value="5cde522ad8b1ff1b89c36987">Python</option>
+                    <option value="5cde522ad8b1ff1b89c36987">PHP</option>
                 </select>
             </div>
 
@@ -133,7 +152,7 @@ const AddProduct = () => {
     return (
         <Layout
             title="Add a new product"
-            description={`Hello ${user.name}, ready to add a new product?`}
+            description={`G'day ${user.name}, ready to add a new product?`}
         >
             <div className="row">
                 <div className="col-md-8 offset-md-2">{newPostForm()}</div>
