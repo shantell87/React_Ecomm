@@ -5,7 +5,9 @@ const Product = require('../models/product');
 const { errorHandler } = require('../helpers/dbErrorHelpers');
 
 exports.productById = (req, res, next, id) => {
-    Product.findById(id).exec((err, product) => {
+    Product.findById(id)
+    .populate('category')
+    .exec((err, product) => {
         if (err || !product) {
             return res.status(400).json({
                 error: "Product not found"
@@ -19,7 +21,7 @@ exports.productById = (req, res, next, id) => {
 exports.read = (req, res) => {
     req.product.photo = undefined;
     return res.json(req.product);
-}
+};
 
 exports.create = (req, res) => {
     let form = new formidable.IncomingForm();
@@ -151,7 +153,7 @@ exports.update = (req, res) => {
 exports.list = (req, res) => {
     let order = req.query.order ? req.query.order : 'asc'
     let sortBy = req.query.sortBy ? req.query.sortBy : '_id'
-    let limit = req.query.limit ? parseInt(req.query.limit) : 6
+    let limit = req.query.limit ? parseInt(req.query.limit) : 6;
 
     Product.find()
         .select("-photo")
@@ -159,7 +161,7 @@ exports.list = (req, res) => {
         .sort([[sortBy, order]])
         .limit(limit)
         .exec((err, products) => {
-            if(err) {
+            if (err) {
                 return res.status(400).json({
                     error:'Product not found'
                 });
@@ -255,4 +257,27 @@ exports.photo = (req, res, next) => {
         return res.send(req.product.photo.data);
     }
     next();
+};
+
+exports.listSearch = (req, res) => {
+    // create query object to hold search value and category value
+    const query = {};
+    // assign search value to query.name
+    if (req.query.search) {
+        query.name = { $regex: req.query.search, $options: "i" };
+        // assigne category value to query.category
+        if (req.query.category && req.query.category != "All") {
+            query.category = req.query.category;
+        }
+        // find the product based on query object with 2 properties
+        // search and category
+        Product.find(query, (err, products) => {
+            if (err) {
+                return res.status(400).json({
+                    error: errorHandler(err)
+                });
+            }
+            res.json(products);
+        }).select("-photo");
+    }
 };
