@@ -8,14 +8,14 @@ exports.productById = (req, res, next, id) => {
     Product.findById(id)
     .populate('category')
     .exec((err, product) => {
-        if (err || !product) {
-            return res.status(400).json({
-                error: "Product not found"
-            });
-        }
-        req.product = product;
-        next();
-    });
+            if (err || !product) {
+                return res.status(400).json({
+                    error: 'Product not found'
+                });
+            }
+            req.product = product;
+            next();
+        });
 };
 
 exports.read = (req, res) => {
@@ -29,38 +29,37 @@ exports.create = (req, res) => {
     form.parse(req, (err, fields, files) => {
         if (err) {
             return res.status(400).json({
-                error: "Image could not be uploaded"
+                error: 'Image could not be uploaded'
             });
         }
-        //check for all fields
-        const {name, description, price, category, quantity, shipping} = fields;
-        
-        if(!name || !description || !price || !category || !quantity || !shipping) 
-        {
+        // check for all fields
+        const { name, description, price, category, quantity, shipping } = fields;
+
+        if (!name || !description || !price || !category || !quantity || !shipping) {
             return res.status(400).json({
-                error: "All fields are required"
+                error: 'All fields are required'
             });
         }
 
         let product = new Product(fields);
 
-        //1kb = 1000
-        //1mb = 10000
+        // 1kb = 1000
+        // 1mb = 1000000
 
         if (files.photo) {
-            //console.log("Files Photo:", files.photo)
+            // console.log("FILES PHOTO: ", files.photo);
             if (files.photo.size > 1000000) {
                 return res.status(400).json({
-                    error: "Image should be less than 1mb in size"
+                    error: 'Image should be less than 1mb in size'
                 });
             }
-
             product.photo.data = fs.readFileSync(files.photo.path);
             product.photo.contentType = files.photo.type;
         }
 
         product.save((err, result) => {
             if (err) {
+                console.log('PRODUCT CREATE ERROR ', err);
                 return res.status(400).json({
                     error: errorHandler(err)
                 });
@@ -79,7 +78,7 @@ exports.remove = (req, res) => {
             });
         }
         res.json({
-            message: "Product deleted successfully"
+            message: 'Product deleted successfully'
         });
     });
 };
@@ -90,29 +89,7 @@ exports.update = (req, res) => {
     form.parse(req, (err, fields, files) => {
         if (err) {
             return res.status(400).json({
-                error: "Image could not be uploaded"
-            });
-        }
-        // check for all fields
-        const {
-            name,
-            description,
-            price,
-            category,
-            quantity,
-            shipping
-        } = fields;
-
-        if (
-            !name ||
-            !description ||
-            !price ||
-            !category ||
-            !quantity ||
-            !shipping
-        ) {
-            return res.status(400).json({
-                error: "All fields are required"
+                error: 'Image could not be uploaded'
             });
         }
 
@@ -126,7 +103,7 @@ exports.update = (req, res) => {
             // console.log("FILES PHOTO: ", files.photo);
             if (files.photo.size > 1000000) {
                 return res.status(400).json({
-                    error: "Image should be less than 1mb in size"
+                    error: 'Image should be less than 1mb in size'
                 });
             }
             product.photo.data = fs.readFileSync(files.photo.path);
@@ -144,44 +121,48 @@ exports.update = (req, res) => {
     });
 };
 
-// **
-// Sell / arrival
-// by sell = /products?sortBy=sold&order=desc&limit=4
-// by arrival = /products?sortBy=createdAt&order=desc&limit=4
-// if no params are sent, then all products are returned
+/**
+ * sell / arrival
+ * by sell = /products?sortBy=sold&order=desc&limit=4
+ * by arrival = /products?sortBy=createdAt&order=desc&limit=4
+ * if no params are sent, then all products are returned
+ */
 
 exports.list = (req, res) => {
-    let order = req.query.order ? req.query.order : 'asc'
-    let sortBy = req.query.sortBy ? req.query.sortBy : '_id'
+    let order = req.query.order ? req.query.order : 'asc';
+    let sortBy = req.query.sortBy ? req.query.sortBy : '_id';
     let limit = req.query.limit ? parseInt(req.query.limit) : 6;
 
     Product.find()
-        .select("-photo")
+        .select('-photo')
         .populate('category')
         .sort([[sortBy, order]])
         .limit(limit)
         .exec((err, products) => {
             if (err) {
                 return res.status(400).json({
-                    error:'Product not found'
+                    error: 'Products not found'
                 });
             }
             res.json(products);
         });
 };
 
-// it will find the products based on the req product category
-// other products that has the same category, will be returned 
+/**
+ * it will find the products based on the req product category
+ * other products that has the same category, will be returned
+ */
+
 exports.listRelated = (req, res) => {
     let limit = req.query.limit ? parseInt(req.query.limit) : 6;
 
     Product.find({ _id: { $ne: req.product }, category: req.product.category })
         .limit(limit)
-        .populate("category", "_id name")
+        .populate('category', '_id name')
         .exec((err, products) => {
             if (err) {
                 return res.status(400).json({
-                    error: "Products not found"
+                    error: 'Products not found'
                 });
             }
             res.json(products);
@@ -189,10 +170,10 @@ exports.listRelated = (req, res) => {
 };
 
 exports.listCategories = (req, res) => {
-    Product.distinct("category", {}, (err, categories) => {
+    Product.distinct('category', {}, (err, categories) => {
         if (err) {
             return res.status(400).json({
-                error: "Categories not found"
+                error: 'Categories not found'
             });
         }
         res.json(categories);
@@ -208,8 +189,8 @@ exports.listCategories = (req, res) => {
  */
 
 exports.listBySearch = (req, res) => {
-    let order = req.body.order ? req.body.order : "desc";
-    let sortBy = req.body.sortBy ? req.body.sortBy : "_id";
+    let order = req.body.order ? req.body.order : 'desc';
+    let sortBy = req.body.sortBy ? req.body.sortBy : '_id';
     let limit = req.body.limit ? parseInt(req.body.limit) : 100;
     let skip = parseInt(req.body.skip);
     let findArgs = {};
@@ -219,7 +200,7 @@ exports.listBySearch = (req, res) => {
 
     for (let key in req.body.filters) {
         if (req.body.filters[key].length > 0) {
-            if (key === "price") {
+            if (key === 'price') {
                 // gte -  greater than price [0-10]
                 // lte - less than
                 findArgs[key] = {
@@ -233,15 +214,15 @@ exports.listBySearch = (req, res) => {
     }
 
     Product.find(findArgs)
-        .select("-photo")
-        .populate("category")
+        .select('-photo')
+        .populate('category')
         .sort([[sortBy, order]])
         .skip(skip)
         .limit(limit)
         .exec((err, data) => {
             if (err) {
                 return res.status(400).json({
-                    error: "Products not found"
+                    error: 'Products not found'
                 });
             }
             res.json({
@@ -253,7 +234,7 @@ exports.listBySearch = (req, res) => {
 
 exports.photo = (req, res, next) => {
     if (req.product.photo.data) {
-        res.set("Content-Type", req.product.photo.contentType);
+        res.set('Content-Type', req.product.photo.contentType);
         return res.send(req.product.photo.data);
     }
     next();
