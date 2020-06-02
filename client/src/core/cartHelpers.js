@@ -47,9 +47,9 @@ export const getCart = () => {
 
 export const updateItem = (productId, count) => {
     let cart = [];
-    if (typeof window !== "undefined") {
-        if (localStorage.getItem("cart")) {
-            cart = JSON.parse(localStorage.getItem("cart"));
+    if (typeof window !== 'undefined') {
+        if (localStorage.getItem('cart')) {
+            cart = JSON.parse(localStorage.getItem('cart'));
         }
 
         cart.map((product, i) => {
@@ -58,7 +58,7 @@ export const updateItem = (productId, count) => {
             }
         });
 
-        localStorage.setItem("cart", JSON.stringify(cart));
+        localStorage.setItem('cart', JSON.stringify(cart));
     }
 };
 
