@@ -1,5 +1,5 @@
 const { Order, CartItem } = require("../models/order");
-const { errorHandler } = require("../helpers/dbErrorHandler");
+const { errorHandler } = require("../helpers/dbErrorHelpers");
 
 exports.create = (req, res) => {
     // console.log("CREATE ORDER: ", req.body);
@@ -14,3 +14,4 @@ exports.create = (req, res) => {
         res.json(data);
     });
 };
+
