@@ -1,5 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const path = require('path');
+const serveStatic = require('serve-static');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -19,6 +21,7 @@ const orderRoutes = require('./routes/orders');
 
 // app
 const app = express();
+app.use(serveStatic(path.join(__dirname, 'dist')))
 
 //db
 mongoose
