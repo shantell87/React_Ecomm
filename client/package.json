@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:8000/",
+  "proxy": "http://localhost:3000/",
   "dependencies": {
     "braintree-web-drop-in-react": "^1.1.1",
     "dotenv": "^8.2.0",
