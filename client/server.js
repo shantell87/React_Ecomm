@@ -10,10 +10,6 @@ app.get('*', function (req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-app.get('/ping', function (req, res) {
-    return res.send('pong');
-});
-
 const PORT = process.env.PORT || 3000;
 
 mongoose.connect(
