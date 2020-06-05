@@ -1,7 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const path = require('path');
-const serveStatic = require('serve-static');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -21,7 +19,11 @@ const orderRoutes = require('./routes/orders');
 
 // app
 const app = express();
-app.use(serveStatic(path.join(__dirname, 'dist')))
+
+// Serve up static assets
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static("client/build"));
+}
 
 //db
 mongoose

@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "MERN stack ecommerce page",
   "engines": {
-    "node": "10.15.3"
+    "node": "10.15.3",
+    "npm": "6.4.1"
   },
   "main": "app.js",
   "scripts": {
@@ -35,6 +36,7 @@
     "morgan": "^1.10.0",
     "nodemon": "^2.0.3",
     "query-string": "^6.12.1",
+    "serve": "^11.3.2",
     "uuid": "^8.0.0",
     "uuidv1": "^1.6.14"
   },
