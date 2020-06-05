@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const expressValidator = require('express-validator');
-
 require('dotenv').config();
 
 //import routes
@@ -19,7 +18,6 @@ const orderRoutes = require('./routes/orders');
 
 // app
 const app = express();
-const path = require("path");
 
 //middlewares
 app.use(morgan('dev'));
@@ -47,14 +45,6 @@ mongoose.connect(process.env.DATABASE, {
 
 
 const port = process.env.PORT || 8000;
-
-
-if(process.env.NODE_ENV === "production") {
-    app.use(express.static("client/build"));
-}
-
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
