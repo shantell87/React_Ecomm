@@ -19,20 +19,7 @@ const orderRoutes = require('./routes/orders');
 
 // app
 const app = express();
-
-// Serve up static assets
-if (process.env.NODE_ENV === "production") {
-    app.use(express.static(path.join(__dirname, 'client/build')));
-}
-
-//db
-mongoose
-.connect(process.env.DATABASE, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true
-})
-    .then(() => console.log('DB Connected'));
+const path = require("path");
 
 //middlewares
 app.use(morgan('dev'));
@@ -50,7 +37,24 @@ app.use('/api', productRoutes);
 app.use('/api', braintreeRoutes);
 app.use("/api", orderRoutes);
 
+//db
+mongoose
+.connect(process.env.DATABASE, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true
+})
+    .then(() => console.log('DB Connected'));
+
+
 const port = process.env.PORT || 8000;
+
+// Serve up static assets
+app.use(express.static(path.join(__dirname, "client", "build")))
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
