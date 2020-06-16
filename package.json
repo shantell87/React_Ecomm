@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "MERN stack ecommerce page",
   "engines": {
-    "node": "10.15.3",
+    "node": "v10.15.3",
     "npm": "6.4.1"
   },
   "main": "app.js",
@@ -13,8 +13,8 @@
     "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
     "client": "cd client && npm run start",
     "install": "cd client && npm install",
-    "build": "cd client/ && npm intall && npm run build",
-    "heroku-postbuild": "npm run build"
+    "build": "webpack",
+    "heroku-postbuild": "echo Skip build on Heroku"
   },
   "keywords": [],
   "author": "",
