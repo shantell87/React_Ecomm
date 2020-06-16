@@ -10,7 +10,7 @@
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "start:prod": "node app.js",
-    "start:dev": "concurrently \"nodemon app.js\"  \"npm run client\" ",
+    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
     "client": "cd client && npm run start",
     "install": "cd client && npm install",
     "build": "cd client/ && npm intall && npm run build",
@@ -29,12 +29,14 @@
     "express-jwt": "^5.3.3",
     "express-validator": "^5.3.1",
     "formidable": "^1.2.2",
+    "if-env": "^1.0.4",
     "jsonwebtoken": "^8.5.1",
+    "jwt-simple": "^0.5.6",
     "lodash": "^4.17.15",
     "moment": "^2.26.0",
-    "mongoose": "^5.9.14",
+    "mongoose": "^5.9.18",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.3",
+    "nodemon": "^2.0.4",
     "query-string": "^6.12.1",
     "serve": "^11.3.2",
     "uuid": "^8.0.0",
@@ -42,5 +44,13 @@
   },
   "devDependencies": {
     "concurrently": "^5.2.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shantell87/React_Ecomm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shantell87/React_Ecomm/issues"
+  },
+  "homepage": "https://github.com/shantell87/React_Ecomm#readme"
 }
