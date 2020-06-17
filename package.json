@@ -14,8 +14,7 @@
     "client": "cd client && npm run start",
     "install": "cd client && npm install",
     "build": "webpack",
-    "heroku-postbuild": "cd client && npm install && npm run build",
-    "postinstall": "ng build"
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
