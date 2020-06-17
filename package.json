@@ -14,7 +14,7 @@
     "client": "cd client && npm run start",
     "install": "cd client && npm install",
     "build": "webpack",
-    "heroku-postbuild": "echo Skip build on Heroku"
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
