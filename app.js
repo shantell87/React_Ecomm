@@ -36,6 +36,8 @@ app.use('/api', braintreeRoutes);
 app.use("/api", orderRoutes);
 
 //db
+const MONGODB_URI = process.env.MONGODB_URI;
+
 mongoose.connect(process.env.DATABASE, {
     useNewUrlParser: true,
     useCreateIndex: true,
