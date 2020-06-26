@@ -36,13 +36,21 @@ app.use('/api', braintreeRoutes);
 app.use("/api", orderRoutes);
 
 //db
-mongoose.connect(process.env.DATABASE || "mongodb://ecommerce:password1@ds155073.mlab.com:55073/heroku_ps5qxtr4", {
+mongoose.connect(process.env.DATABASE, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
     useFindAndModify:false
 })
     .then(() => console.log('DB Connected'));
+
+mongoose.connect(process.env.MONGODB_URI, {
+        useNewUrlParser: true,
+        useCreateIndex: true,
+        useUnifiedTopology: true,
+        useFindAndModify:false
+    })
+        .then(() => console.log('MLAB Connected'));
 
 if(process.env.NODE_ENV === 'production'){
     app.use(express.static('client/build'));
