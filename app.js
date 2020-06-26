@@ -36,12 +36,13 @@ app.use('/api', braintreeRoutes);
 app.use("/api", orderRoutes);
 
 //db
-const MONGODB_URI = process.env.MONGODB_URI || process.env.DATABASE;
+// const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/ecommerce";
 
-mongoose.connect(process.env.DATABASE || process.env.MONGODB_URI, {
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/ecommerce", {
     useNewUrlParser: true,
     useCreateIndex: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify:false
 })
     .then(() => console.log('DB Connected'));
 
