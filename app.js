@@ -36,9 +36,9 @@ app.use('/api', braintreeRoutes);
 app.use("/api", orderRoutes);
 
 //db
-// const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/ecommerce";
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/ecommerce";
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/ecommerce", {
+mongoose.connect(process.env.DATABASE || MONGODB_URI, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
