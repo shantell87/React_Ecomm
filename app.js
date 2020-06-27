@@ -37,9 +37,9 @@ app.use('/api', braintreeRoutes);
 app.use("/api", orderRoutes);
 
 //db
-const uri = process.env.MONGODB_URI;
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/ecommerce";
 
-mongoose.connect(process.env.MONGODB_URI, {
+mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
