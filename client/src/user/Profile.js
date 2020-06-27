@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from "react";
 import Layout from "../core/Layout";
-import { isAuthenticated } from "../auth";
+import { isAuthenticated } from "../auth"; // eslint-disable-next-line
 import { Link, Redirect } from "react-router-dom";
 import { read, update, updateUser } from "./apiUser";
 
@@ -13,7 +13,7 @@ const Profile = ({ match }) => {
         success: false
     });
 
-    const { token } = isAuthenticated();
+    const { token } = isAuthenticated(); // eslint-disable-next-line
     const { name, email, password, error, success } = values;
 
     const init = userId => {
@@ -28,7 +28,7 @@ const Profile = ({ match }) => {
     };
 
     useEffect(() => {
-        init(match.params.userId);
+        init(match.params.userId); // eslint-disable-next-line
     }, []);
 
     const handleChange = name => e => {

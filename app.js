@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const expressValidator = require('express-validator');
 require('dotenv').config();
+const port = process.env.PORT || 8000;
 
 //import routes
 const authRoutes = require('./routes/auth');
@@ -36,7 +37,9 @@ app.use('/api', braintreeRoutes);
 app.use("/api", orderRoutes);
 
 //db
-mongoose.connect(process.env.DATABASE && process.env.MONGODB_URI, {
+const uri = process.env.MONGODB_URI;
+
+mongoose.connect(process.env.DATABASE || uri, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
@@ -49,8 +52,6 @@ if(process.env.NODE_ENV === 'production'){
     app.use(express.static('client/build'));
 }
 
-
-const port = process.env.PORT || 8000;
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });

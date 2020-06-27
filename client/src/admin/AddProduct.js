@@ -26,13 +26,13 @@ const AddProduct = () => {
         name,
         description,
         price,
-        categories,
-        category,
+        categories, // eslint-disable-next-line
+        category, // eslint-disable-next-line
         shipping,
         quantity,
         loading,
         error,
-        createdProduct,
+        createdProduct, // eslint-disable-next-line
         redirectToProfile,
         formData
     } = values;
@@ -53,7 +53,7 @@ const AddProduct = () => {
     };
 
     useEffect(() => {
-        init();
+        init(); // eslint-disable-next-line
     }, []);
 
     const handleChange = name => event => {

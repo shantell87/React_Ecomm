@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 // import Layout from "./Layout";
+// eslint-disable-next-line
 import { getProducts, 
         getBraintreeClientToken, 
         processPayment, 
@@ -34,8 +35,8 @@ const Checkout = ({ products }) => {
         });
     };
 
-    useEffect(() => {
-        getToken(userId, token);
+    useEffect(() => { // eslint-disable-next-line
+        getToken(userId, token); // eslint-disable-next-line
     }, []);
 
     const handleAddress = event => {
@@ -63,8 +64,8 @@ const Checkout = ({ products }) => {
     const buy = () => {
         setData({ loading: true });
         // send the nonce to your server
-        // nonce = data.instance.requestPaymentMethod()
-        let nonce;
+        // nonce = data.instance.requestPaymentMethod() 
+        let nonce; // eslint-disable-next-line
         let getNonce = data.instance
             .requestPaymentMethod()
             .then(data => {

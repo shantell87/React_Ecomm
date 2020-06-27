@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
+// eslint-disable-next-line
 import { Link } from "react-router-dom";
 import { listOrders, getStatusValues, updateOrderStatus } from "./apiAdmin";
 import moment from 'moment';
@@ -32,8 +33,8 @@ const Orders = () => {
     };
 
     useEffect(() => {
-        loadOrders();
-        loadStatusValues();
+        loadOrders();// eslint-disable-next-line
+        loadStatusValues(); // eslint-disable-next-line
     }, []);
 
     const showOrdersLength = () => {
