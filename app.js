@@ -39,7 +39,7 @@ app.use("/api", orderRoutes);
 //db
 const uri = process.env.MONGODB_URI;
 
-mongoose.connect(process.env.DATABASE || uri, {
+mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
