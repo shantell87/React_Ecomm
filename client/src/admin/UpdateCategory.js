@@ -33,7 +33,7 @@ const UpdateCategory = ({ match }) => {
     };
 
     useEffect(() => { 
-        init(match.params.categoryId); // eslint-disable-next-line
+        init(match.params.categoryId);
     }, []);
 
     const handleChange = name => event => {

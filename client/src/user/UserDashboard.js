@@ -24,7 +24,7 @@ const Dashboard = () => {
     };
 
     useEffect(() => {
-        init(_id, token); // eslint-disable-next-line
+        init(_id, token);
     }, []);
 
     const userLinks = () => {

@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const expressValidator = require('express-validator');
 require('dotenv').config();
-const port = process.env.PORT || 8000;
+
 
 //import routes
 const authRoutes = require('./routes/auth');
@@ -51,6 +51,8 @@ mongoose.connect(MONGODB_URI, {
 if(process.env.NODE_ENV === 'production'){
     app.use(express.static('client/build'));
 }
+
+const port = process.env.PORT || 8000;
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
