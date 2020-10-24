@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
@@ -37,9 +38,7 @@ app.use('/api', braintreeRoutes);
 app.use("/api", orderRoutes);
 
 //db
-const MONGODB_URI = process.env.MONGODB_URI || process.env.DATABASE;
-
-mongoose.connect(process.env.DATABASE || process.env.MONGODB_URI, {
+mongoose.connect(process.env.DATABASE, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
@@ -48,8 +47,11 @@ mongoose.connect(process.env.DATABASE || process.env.MONGODB_URI, {
     .then(() => console.log('DB Connected'));
 
 
-if(process.env.NODE_ENV === 'production'){
-    app.use(express.static('client/build'));
+if (process.env.PROD) {
+    app.use(exxpress.static(path.join(__dirname, './client/build')));
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, './client/build/index.html'));
+    });
 }
 
 const port = process.env.PORT || 8000;

@@ -9,13 +9,13 @@
   "main": "app.js",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
-    "start:prod": "node app.js",
+    "start:prod": "node index.js",
+    "postinstall": "cd ./client && yarn",
     "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
     "client": "cd client && npm run start",
-    "server": "nodemon app.js",
     "install": "cd client && npm install",
-    "build": "webpack",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "build": "cd client && npm run build",
+    "heroku-postbuild": "npm run build"
   },
   "keywords": [],
   "author": "",
