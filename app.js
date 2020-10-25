@@ -42,16 +42,16 @@ mongoose.connect(process.env.DATABASE, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
-    useFindAndModify:false
+    useFindAndModify: false
 })
     .then(() => console.log('DB Connected'));
 
 
-if (process.env.PROD) {
-    app.use(exxpress.static(path.join(__dirname, './client/build')));
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, './client/build/index.html'));
-    });
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'));
+    app.get('*', () => {
+        res.sendFile(path.join(__dirname, 'client', 'build', 'index.html')); //relative path
+    })
 }
 
 const port = process.env.PORT || 8000;
