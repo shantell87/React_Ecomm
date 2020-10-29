@@ -4,6 +4,7 @@ import Layout from '../core/Layout';
 import { signup } from '../auth/index';
 
 
+
 const Signup = () => {
     const [values, setValues] = useState({
         name: "",

@@ -11,10 +11,10 @@ require('dotenv').config();
 // Firebase App (the core Firebase SDK) is always required and
 // must be listed before other Firebase SDKs
 var firebase = require("firebase/app");
-
 // Add the Firebase products that you want to use
 require("firebase/auth");
 require("firebase/firestore");
+
 
 
 //import routes
@@ -58,7 +58,7 @@ mongoose.connect(process.env.DATABASE, {
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
     app.get('*', () => {
-        res.sendFile(path.join(__dirname, 'client', 'build', 'index.html')); //relative path
+        res.sendFile(path.join(__dirname, '../client/build', 'index.html')); //relative path
     })
 }
 
