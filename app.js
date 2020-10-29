@@ -46,13 +46,14 @@ app.use('/api', braintreeRoutes);
 app.use("/api", orderRoutes);
 
 //db
-mongoose.connect(process.env.DATABASE, {
+mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
-    useCreateIndex: true,
     useUnifiedTopology: true,
+    useCreateIndex: true,
     useFindAndModify: false
 })
-    .then(() => console.log('DB Connected'));
+    .then(() => console.log('DB Connected'))
+    .catch((err) => console.log(err));
 
 
 if (process.env.NODE_ENV === 'production') {
